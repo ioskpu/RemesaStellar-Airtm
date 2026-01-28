@@ -10,11 +10,32 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Middlewares
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+const frontendUrl = process.env.FRONTEND_URL;
+const allowedOrigins = ['http://localhost:3000'];
+if (frontendUrl) {
+  allowedOrigins.push(frontendUrl);
+  // También agregar la versión sin slash final si existe
+  if (frontendUrl.endsWith('/')) {
+    allowedOrigins.push(frontendUrl.slice(0, -1));
+  } else {
+    allowedOrigins.push(frontendUrl + '/');
+  }
+}
+
 app.use(cors({
-  origin: [frontendUrl, 'http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key']
+  origin: (origin, callback) => {
+    // Permitir solicitudes sin origen (como herramientas de API o Server-to-Server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log('CORS bloqueado para el origen:', origin);
+      callback(new Error('No permitido por CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key'],
+  credentials: true
 }));
 app.use(express.json());
 
