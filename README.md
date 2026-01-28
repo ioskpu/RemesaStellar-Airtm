@@ -22,19 +22,13 @@ Demostrar un flujo de usuario fluido y profesional (estilo Fintech) para el env�
 
 ---
 
-## 🛠️ Stack Tecnológico
+## 🛠️ Stack Tecnológico y Despliegue
 
-### Frontend
-- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
-- **Estilos**: [Tailwind CSS](https://tailwindcss.com/)
-- **Iconografía**: [Lucide React](https://lucide.dev/)
-- **Componentes**: React QR Code para la generación de pagos.
-
-### Backend
-- **Runtime**: [Node.js](https://nodejs.org/)
-- **Framework**: [Express](https://expressjs.com/)
-- **Base de Datos**: [PostgreSQL](https://www.postgresql.org/)
-- **Blockchain**: [Stellar SDK](https://www.stellar.org/developers/js-stellar-sdk/reference/)
+### Arquitectura de Producción
+- **Frontend**: [Vercel](https://vercel.com/) (Next.js 15+)
+- **Backend**: [Render](https://render.com/) (Node.js/Express)
+- **Base de Datos**: [Neon](https://neon.tech/) (PostgreSQL Serverless)
+- **Blockchain**: [Stellar Testnet](https://www.stellar.org/)
 
 ---
 
@@ -45,22 +39,41 @@ SimuladorRemesa/
 ├── apps/
 │   ├── frontend/     # Aplicación Next.js (Interfaz de usuario)
 │   └── backend/      # Servidor Express (Lógica de negocio y monitoreo Stellar)
+├── database/         # Scripts de base de datos (PostgreSQL)
 └── README.md         # Documentación general
 ```
 
 ---
 
-## 📖 Documentación Detallada
+## 🚀 Instalación y Despliegue
 
-Para más detalles sobre el funcionamiento interno y configuración, consulta nuestra documentación:
-- **[Índice de Documentación](./docs/index.md)**
-- [Guía de Configuración Stellar](./docs/stellar-setup.md)
-- [Arquitectura Backend](./docs/backend.md)
-- [Arquitectura Frontend](./docs/frontend.md)
+### Configuración de Producción
+
+#### 1. Base de Datos (Neon)
+- Crear un proyecto en [Neon](https://neon.tech/).
+- Ejecutar el script `database/schema.sql` en la consola SQL de Neon.
+- Copiar la `DATABASE_URL` para el backend.
+
+#### 2. Backend (Render)
+- Conectar el repositorio de GitHub a Render.
+- Configurar el "Root Directory" como `apps/backend`.
+- **Variables de Entorno**:
+  - `DATABASE_URL`: URL de conexión de Neon.
+  - `FRONTEND_URL`: URL del frontend en Vercel.
+  - `ADMIN_API_KEY`: Clave secreta para el panel de administración.
+  - `STELLAR_NETWORK`: `TESTNET`
+  - `PORT`: `10000` (o el puerto que asigne Render).
+
+#### 3. Frontend (Vercel)
+- Conectar el repositorio de GitHub a Vercel.
+- Configurar el "Root Directory" como `apps/frontend`.
+- **Variables de Entorno**:
+  - `NEXT_PUBLIC_API_URL`: URL del backend en Render (debe terminar en `/api`).
+  - `NEXT_PUBLIC_ADMIN_KEY`: La misma clave secreta configurada en el backend.
 
 ---
 
-## 🚀 Instalación y Uso
+### Instalación Local
 
 ### Requisitos Previos
 - Node.js (v18 o superior)
