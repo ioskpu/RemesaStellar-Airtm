@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createTransaction } from '@/lib/api';
-import { ArrowRight, Globe, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Globe, ShieldCheck, Zap, Settings } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   const [amountUsd, setAmountUsd] = useState<string>('');
@@ -140,6 +141,20 @@ export default function Home() {
           No envíes fondos reales.
         </p>
       </div>
+
+      {/* Floating Admin Button */}
+      <Link 
+        href="/admin" 
+        className="fixed bottom-6 right-6 p-4 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all group z-50"
+        title="Panel de Administración"
+      >
+        <div className="flex items-center gap-3">
+          <div className="bg-slate-100 dark:bg-zinc-800 p-2 rounded-xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 transition-colors">
+            <Settings className="w-5 h-5 text-slate-600 dark:text-zinc-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+          </div>
+          <span className="text-sm font-bold text-slate-700 dark:text-zinc-300 pr-2">Admin</span>
+        </div>
+      </Link>
     </main>
   );
 }
