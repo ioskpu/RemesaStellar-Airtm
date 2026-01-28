@@ -64,13 +64,20 @@ Para más detalles sobre el funcionamiento interno y configuración, consulta nu
 
 ### Requisitos Previos
 - Node.js (v18 o superior)
-- PostgreSQL corriendo localmente o en la nube.
+- **Base de Datos**: Puedes elegir una de estas dos opciones:
+  - **Opción A (Recomendada)**: [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado para levantar la base de datos automáticamente.
+  - **Opción B**: PostgreSQL instalado localmente (requiere ejecutar el script `database/schema.sql` manualmente).
 
 ### Configuración del Backend
-1. Navega a `apps/backend`.
-2. Copia `.env.example` a `.env` y configura tus credenciales de base de datos y llaves de Stellar (Testnet).
-3. Instala dependencias: `npm install`.
-4. Inicia el servidor: `npm run dev`.
+1. **Levantar la Base de Datos**:
+   - Si usas Docker (Recomendado): Ejecuta `docker-compose up -d` en la raíz del proyecto. Esto creará la base de datos y las tablas automáticamente.
+   - Si usas PostgreSQL local: Crea una base de datos llamada `remesa_simulador` y ejecuta el contenido de `database/schema.sql`.
+
+2. **Instalación**:
+   - Navega a `apps/backend`.
+   - Copia `.env.example` a `.env` y configura tus credenciales. (Si usas Docker, el puerto por defecto en el compose es `5433`).
+   - Instala dependencias: `npm install`.
+   - Inicia el servidor: `npm run dev`.
 
 ### Configuración del Frontend
 1. Navega a `apps/frontend`.
