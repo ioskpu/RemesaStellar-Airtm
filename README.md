@@ -50,6 +50,16 @@ SimuladorRemesa/
 
 ---
 
+## 📖 Documentación Detallada
+
+Para más detalles sobre el funcionamiento interno y configuración, consulta nuestra documentación:
+- **[Índice de Documentación](./docs/index.md)**
+- [Guía de Configuración Stellar](./docs/stellar-setup.md)
+- [Arquitectura Backend](./docs/backend.md)
+- [Arquitectura Frontend](./docs/frontend.md)
+
+---
+
 ## 🚀 Instalación y Uso
 
 ### Requisitos Previos
