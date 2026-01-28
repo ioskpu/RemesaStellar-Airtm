@@ -91,3 +91,26 @@ export const getTransactionStatus = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+/**
+ * Obtiene todas las transacciones (Solo Admin)
+ */
+export const getAllTransactions = async (req: Request, res: Response) => {
+  try {
+    const adminKey = req.header('X-Admin-Key');
+
+    if (!adminKey || adminKey !== process.env.ADMIN_API_KEY) {
+      return res.status(401).json({ error: 'No autorizado' });
+    }
+
+    const result = await query(
+      'SELECT id, status, amount_usd, amount_xlm, deposit_address, stellar_hash, airtm_voucher_id, airtm_status, created_at FROM transactions ORDER BY created_at DESC',
+      []
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener transacciones para admin:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
