@@ -10,32 +10,13 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Middlewares
-const frontendUrl = process.env.FRONTEND_URL;
-const allowedOrigins = ['http://localhost:3000'];
-if (frontendUrl) {
-  allowedOrigins.push(frontendUrl);
-  // También agregar la versión sin slash final si existe
-  if (frontendUrl.endsWith('/')) {
-    allowedOrigins.push(frontendUrl.slice(0, -1));
-  } else {
-    allowedOrigins.push(frontendUrl + '/');
-  }
-}
-
+// Configuración de CORS simplificada para producción
 app.use(cors({
-  origin: (origin, callback) => {
-    // Permitir solicitudes sin origen (como herramientas de API o Server-to-Server)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log('CORS bloqueado para el origen:', origin);
-      callback(new Error('No permitido por CORS'));
-    }
-  },
+  origin: true, // Permite cualquier origen que haga la solicitud (reflejado)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key'],
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200 // Importante para navegadores antiguos o específicos
 }));
 app.use(express.json());
 
