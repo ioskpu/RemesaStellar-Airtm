@@ -10,7 +10,12 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Middlewares
-app.use(cors());
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+app.use(cors({
+  origin: [frontendUrl, 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key']
+}));
 app.use(express.json());
 
 // Rutas
